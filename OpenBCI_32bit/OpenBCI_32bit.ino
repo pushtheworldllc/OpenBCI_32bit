@@ -9,15 +9,18 @@ void setup() {
 }
 
 void loop() {
+  
+  if (board.streaming) {
+    while (!board.isADSDataAvailable()) {
+      board.updateChannelData();
+      // Can now send channel data
+      board.sendChannelData();
+    }    
+  }
+  
   // Check to see if there is new data available
   if (board.isSerialAvailableForRead()) {
     char newChar = board.readOneSerialChar();
     boolean cmd_recognized = board.processChar(newChar);
-  }
-
-  if (board.isADSDataAvailable()) {
-    board.updateChannelData();
-    // Can now send channel data
-    board.sendChannelData();
-  }
+  } 
 }
