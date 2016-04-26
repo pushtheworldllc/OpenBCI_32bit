@@ -5,17 +5,17 @@
 
 void setup() {
   // Bring up the OpenBCI Board
-  board.begin();
+  board.beginDebug();
 }
 
 void loop() {
   
   if (board.streaming) {
-    while (!board.isADSDataAvailable()) {
-      board.updateChannelData();
-      // Can now send channel data
-      board.sendChannelData();
-    }    
+    while (!board.isADSDataAvailable()) {} // wait for DRDY pin...
+
+    board.updateChannelData();
+    // Can now send channel data
+    board.sendChannelData();
   }
   
   // Check to see if there is new data available
